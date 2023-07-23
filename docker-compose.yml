@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   db:
@@ -18,7 +18,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
     ports:
-      - "5432:5432" # デバッグ用
+      - '5432:5432' # デバッグ用
 
   app:
     container_name: app
@@ -29,10 +29,9 @@ services:
       - ./backend:/code
       - ./static:/static
     ports:
-      - "8000:8000"
+      - '8000:8000'
       # デバッグ用ポート
-      - "8080:8080"
-    command: go run main.go -b 0.0.0.0
+      - '8080:8080'
     stdin_open: true
     tty: true
     env_file:
@@ -63,8 +62,8 @@ services:
       - node_modules_volume:/frontend/node_modules
     command: sh -c "npm run dev"
     ports:
-      - "3000:3000"
-      - "3030:3030"
+      - '3000:3000'
+      - '3030:3030'
     environment:
       - CHOKIDAR_USEPOLLING=true
       - NEXT_PUBLIC_RESTAPI_URL=http://localhost/back
@@ -73,7 +72,7 @@ services:
     image: localstack/localstack
     container_name: localstack
     ports:
-      - "4566:4566"
+      - '4566:4566'
     environment:
       - SERVICES=sns
       - AWS_ACCESS_KEY_ID=localstack
