@@ -195,3 +195,226 @@ func main() {
 ## 定数
 
 後から上書きできない
+
+```go
+// 大文字にすることで他のパッケージからも呼び出せる
+const Pi = 3.14
+
+func main() {
+	fmt.Println(Pi)
+}
+```
+
+## 演算子
+
+### 算術演算
+
+```go
+func main() {
+	fmt.Println(1+2)
+	fmt.Println(5-1)
+	fmt.Println(5*4)
+	fmt.Println(60/3)
+    // 9を4で割った時のあまり
+	fmt.Println(9%4)
+	n := 0
+	n+= 4
+	fmt.Println(n)
+	n++
+	fmt.Println(n)
+	n--
+	fmt.Println(n)
+}
+// 3
+// 4
+// 20
+// 20
+// 1
+// 4
+// 5
+// 4
+```
+
+### 比較演算
+
+```go
+func main() {
+	fmt.Println(1 == 1)
+	fmt.Println(1 == 2)
+    fmt.Println(3 >= 1)
+}
+// true
+// false
+// true
+```
+
+### 論理演算
+
+```go
+func main() {
+	fmt.Println(true && false == true)
+	fmt.Println(true || false == true)
+}
+// false
+// true
+```
+
+## 関数
+
+```go
+// 関数を定義
+func Plus(x int,y int) int {
+	return x + y
+}
+
+// 戻り値を複数定義することもできる
+func Div(x,y int) (int,int) {
+	q := x / y
+	r := x % y
+	return q, r
+}
+
+func Double(price int) (result int) {
+	result = price * 2
+	return
+}
+
+func main() {
+	i := Plus(2,3)
+	fmt.Println(i)
+	i2, i3 := Div(9,3)
+	fmt.Println(i2,i3)
+	i4 := Double(100)
+	fmt.Println(i4)
+	// 無名関数
+	f := func(x,y int) int {
+		return x + y
+	}
+	i5 := f(1,2)
+	fmt.Println(i5)
+}
+// 5
+// 3 0
+// 200
+// 3
+```
+
+## Closure
+
+```go
+// closure
+func Later() func(string) string {
+	var store string
+	return func(next string) string {
+		s := store
+		store = next
+		return s
+	}
+}
+
+func main() {
+	f2 := Later()
+	fmt.Println(f2("Hello"))
+	fmt.Println(f2("My"))
+	fmt.Println(f2("Name"))
+	fmt.Println(f2("Is"))
+	fmt.Println(f2("Golang"))
+}
+```
+
+## Generator
+
+クロージャーを応用してジェネレータの機能を作成できる
+
+```go
+
+```
+
+## IF
+
+```go
+func main() {
+	a := 0
+	if a == 2 {
+		fmt.Println("Two")
+	} else if a == 1 {
+		fmt.Println("One")
+	} else {
+		fmt.Println("No")
+	}
+}
+// No
+```
+
+## エラーハンドリング
+
+```go
+func main() {
+	var s string = "100"
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("i = %T\n",i)
+}
+// i = int
+```
+
+## for
+
+```go
+func main() {
+	for i := 0; i<10; i++ {
+		if i % 3 != 0 {
+			fmt.Println(i)
+		}
+	}
+	arr := [3]int{1,2,3}
+	// keyとvalueが出力される
+	for i, v := range arr {
+		fmt.Println(i,v)
+	}
+}
+// 1
+// 2
+// 4
+// 5
+// 7
+// 8
+// 0 1
+// 1 2
+// 2 3
+```
+
+## switch
+
+```go
+func main() {
+	n := 1
+	switch n {
+	case 1,2:
+		fmt.Println("1 or 2")
+	case 3,4:
+		fmt.Println("3 or 4")
+	default:
+		fmt.Println("I don't know")
+	}
+}
+```
+
+## defer
+
+関数の終了時に実行したい処理を登録できる
+
+```go
+func TestDefer() {
+	defer fmt.Println("END")
+	fmt.Println("START")
+}
+
+func main() {
+	TestDefer()
+}
+// START
+// END
+```
