@@ -29,7 +29,7 @@ services:
       - ./backend:/code
       - ./static:/static
     ports:
-      - '8000:8000'
+      - '8001:8001'
       # デバッグ用ポート
       - '8080:8080'
     stdin_open: true

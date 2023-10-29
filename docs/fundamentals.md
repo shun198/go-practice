@@ -418,3 +418,121 @@ func main() {
 // START
 // END
 ```
+
+## panic&recover
+
+例外処理
+
+### panic
+
+```go
+func main() {
+	panic("runtime error")
+	fmt.Println("Start")
+}
+// panic: runtime error
+
+// goroutine 1 [running]:
+// main.main()
+//         /Users/shun/go-practice/backend/main.go:8 +0x27
+// exit status 2
+```
+
+### recover
+
+recover を使えば panic による runtime error から復帰させる
+基本的に panic と recover を合わせて使う
+
+```go
+func main() {
+	defer func() {
+		if x := recover(); x != nil {
+			fmt.Println(x)
+		}
+	}()
+	panic("runtime error")
+	fmt.Println("Start")
+}
+// runtime error
+```
+
+## goroutin
+
+GO による並行処理
+
+```go
+func sub() {
+	for {
+		fmt.Println("Sub Loop")
+		time.Sleep(10 + time.Millisecond)
+	}
+}
+
+func main() {
+	// goと記載するだけで並行処理ができる
+	go sub()
+
+	for {
+		fmt.Println("Main Loop")
+		time.Sleep(20 + time.Millisecond)
+	}
+}
+// Main Loop
+// Sub Loop
+// Sub Loop
+// Main Loop
+// Sub Loop
+// Main Loop
+// Sub Loop
+// Main Loop
+// Main Loop
+```
+
+## init
+
+イニシャライザのこと
+
+```go
+func init() {
+	fmt.Println("init")
+}
+
+func main() {
+	fmt.Println("Main")
+}
+```
+
+## スライス
+
+```go
+func main() {
+	var sl []int
+	fmt.Println(sl)
+	var sl2 []int = []int{100,200}
+	fmt.Println(sl2)
+	sl3 := []string{"A","B"}
+	fmt.Println(sl3)
+	// make関数でsliceを新規作成
+	sl4 := make([]int, 5)
+	fmt.Println(sl4)
+	sl2[0] = 1000
+	fmt.Println(sl2)
+	sl5 := []int{1,2,3,4,5}
+	// index番号を指定して値を取り出す
+	fmt.Println(sl5)
+	fmt.Println(sl5[0])
+	fmt.Println(sl5[2:4])
+	fmt.Println(sl5[:2])
+	fmt.Println(sl5[2:])
+}
+// []
+// [100 200]
+// [A B]
+// [0 0 0 0 0]
+// [1000 200]
+// [1 2 3 4 5]
+// 1
+// [3 4]
+// [1 2]
+// [3 4 5]
+```
